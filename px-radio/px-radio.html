@@ -1,0 +1,29 @@
+<!-- Copyright (c) PX Elements Project Authors -->
+
+<dom-module id="px-radio">
+    <template>
+        <link type="text/css" rel="stylesheet" href="/QP6c/1?css">
+        <input id$="{{uuid}}" type="radio" name="{{name}}" title="{{title}}" value="{{value}}" checked="{{checked}}">
+        <label html-for="{{uuid}}">
+            <content></content>
+        </label>
+    </template>
+</dom-module>
+<script>
+    Polymer( {
+        is: 'px-radio',
+        properties: {
+            name: String,
+            title: String,
+            value: String,
+            checked: String
+        },
+        ready: function() {
+            this.uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, function( c ) {
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : ( r & 0x3 | 0x8 );
+                return v.toString( 16 );
+            } );
+        }
+    } );
+</script>

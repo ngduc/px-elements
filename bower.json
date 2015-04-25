@@ -1,0 +1,16 @@
+{
+  "name": "px-elements",
+  "version": "0.0.1",
+  "homepage": "https://github.com/ngduc/px-elements",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^0.8.0-rc.7"
+  }
+}
