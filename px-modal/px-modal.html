@@ -1,0 +1,117 @@
+<!-- Copyright (c) PX Elements Project Authors -->
+
+<dom-module id="px-modal">
+    <style>
+        :host {
+            position: fixed;
+            padding: 0px 10px 10px 10px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            box-shadow: 1px 1px 1px #dedede;
+            background-color: #fff;
+            z-index: 999;
+            display: none;
+        }
+    </style>
+    <template>
+        <input id="dummyFocus" type="text" style="position: absolute; top: -1000px;">
+        <section id="modal">
+            <content id="content"></content>
+        </section>
+    </template>
+</dom-module>
+<script>
+    ( function() {
+        Polymer( {
+            is: 'px-modal',
+            properties: {
+                overlay: {
+                    value: 'true'
+                },
+                center: {
+                    value: 'true'
+                },
+                closeOnEsc: {
+                    value: 'true'
+                },
+                closeOnClick: {
+                    value: 'true'
+                },
+                fx: {
+                    value: 'fade'
+                }
+            },
+            ready: function() {},
+            show: function() {
+                var _this = this;
+
+                if ( this.cachedContent ) {
+                    //this.$.modal.innerHTML = this.cachedContent;
+                } else {
+                    //this.cachedContent = this.$.modal.innerHTML;
+                }
+
+                if ( this.overlay === 'true' ) {
+                    var o = document.createElement( 'div' );
+                    o.className = 'pxModalOverlay';
+                    o.style.position = 'fixed';
+                    o.style.width = '100vw';
+                    o.style.height = '100vh';
+                    o.style.backgroundColor = '#efefef';
+                    o.style.opacity = '0.5';
+                    o.style.zIndex = '998';
+                    this.overlayEl = o;
+
+                    if ( this.closeOnClick !== 'false' ) {
+                        this.overlayEl.onclick = function() {
+                            _this.close();
+                        }
+                    }
+                    document.body.insertBefore( o, document.body.childNodes[ 0 ] );
+                }
+
+                if ( this.fx === 'fade' ) {
+                    this.style.opacity = 0;
+                    this.style.display = 'block';
+                    this.style.transition = 'opacity 0.3s ease-in-out';
+                    setTimeout( function() {
+                        _this.style.opacity = 1;
+                    }, 10 );
+                } else {
+                    this.style.display = 'block';
+                }
+
+                if ( this.center === 'true' ) {
+                    this.centerModal();
+                }
+                if ( this.closeOnEsc === 'true' ) {
+                    this.addEventListener( 'keyup', this.closeOnEscHandler, false );
+                }
+                this.setFocus();
+            },
+            close: function() {
+                if ( this.overlayEl ) this.overlayEl.remove();
+                this.style.display = 'none';
+            },
+            centerModal: function() {
+                var thisWidth = parseInt( window.getComputedStyle( this ).width );
+                var thisHeight = parseInt( window.getComputedStyle( this ).height );
+                this.style.left = ( _w_width / 2 - thisWidth / 2 ) + 'px';
+                this.style.top = ( _w_height / 2 - thisHeight / 2 ) + 'px';
+            },
+            setFocus: function() {
+                var els = this.children;
+                var focusNode = els[ 0 ].parentElement.querySelector( '[autofocus]' ) || this.$.dummyFocus;
+                if ( focusNode ) focusNode.focus();
+            },
+            closeOnEscHandler: function( ev ) {
+                if ( ev.keyCode === 27 ) {
+                    this.close();
+                }
+            }
+        } );
+
+        var _w_width = "innerWidth" in window ? window.innerWidth : document.documentElement.offsetWidth;
+        var _w_height = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    } )();
+</script>

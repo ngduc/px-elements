@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
@@ -8,9 +9,15 @@
     <link rel="import" href="../bower_components/polymer/polymer.html">
 
     <link rel="import" href="../px-radio/px-radio.html">
+    <link rel="import" href="../px-modal/px-modal.html">
     <style>
+        html, body, h3 {
+            margin: 0;
+            padding: 0;
+        }
         body {
             font-family: 'Helvetica Neue', Arial;
+            padding: 10px;
         }
     </style>
 </head>
@@ -22,6 +29,21 @@
     <h4>px-radio</h4>
     <px-radio name="ans" checked="true">Awesome!</px-radio>
     <px-radio name="ans">It's OK</px-radio>
+    <p></p>
+
+
+    <button onclick="document.getElementById( 'myModal' ).show();">Show</button>
+    <div id="testScrollingModal" style="height: 2000px"></div>
+
+    <px-modal id="myModal" center="true" overlay="true" close-on-esc="true" close-on-click="true">
+        <h3>Px-Modal Demo</h3>
+        <form>
+            <input type="text" autofocus>
+        </form>
+        <button onclick="document.getElementById( 'myModal' ).close()">Close</button>
+    </px-modal>
+
 
 </body>
+
 </html>
